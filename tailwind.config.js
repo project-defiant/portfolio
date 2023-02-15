@@ -8,11 +8,12 @@ module.exports = {
 	theme: {
 		colors: {
 			background: "#060213",
-			lightblue: "#1DBDF0",
-			lightblueBox: "#13799A",
+			lightblueBox: "#3FA4D1",
+			lightblue: "#46B9EB",
 			magenta: "#B3365B",
-			magentaBox: "#B3365B",
+			magentaBox: "#B3506E",
 			font: "#EBCACA",
+			fontHover: "#F6D5C7",
 			test: "#000",
 			test2: "#fff",
 			test3: "#ddd",

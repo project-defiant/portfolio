@@ -39,9 +39,7 @@ const stars = Array.from({ length: 500 }, (_, i) => i).map(() => new Star());
 const StarComponent = function (props: LayoutProps) {
 	return (
 		<div
-			className={
-				"rounded-full bg-test3 absolute flex justify-center items-center"
-			}
+			className={" bg-font rounded-full absolute w-full h-full margin-0"}
 			style={props.star.style()}
 		></div>
 	);
@@ -49,8 +47,8 @@ const StarComponent = function (props: LayoutProps) {
 
 const BackgroundContainer = function () {
 	return (
-		<div className="bg-background absolute inset-0 -z-50 ">
-			<div className="absolute inset-0 -z-50">
+		<div className="">
+			<div className="absolute w-full h-full bg-background -z-50">
 				{stars.map((elem, idx) => (
 					<StarComponent key={`star${idx}`} star={elem} />
 				))}

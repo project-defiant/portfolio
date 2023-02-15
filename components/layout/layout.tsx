@@ -1,7 +1,8 @@
 import { Fragment, ReactNode } from "react";
 import MainHeader from "./main-header";
 import BackgroundContainer from "./background";
-
+import { Alef } from "@next/font/google";
+import FooterComponent from "../footer/footer";
 interface LayoutProps {
 	children?: ReactNode | undefined;
 	className?: string;
@@ -10,9 +11,14 @@ interface LayoutProps {
 const Layout = function (props: LayoutProps) {
 	return (
 		<Fragment>
-			<BackgroundContainer></BackgroundContainer>
-			<MainHeader></MainHeader>
-			<main className={"text-font"}>{props.children}</main>
+			<div className="relative container overflow-hidden max-w-full min-h-screen">
+				<BackgroundContainer></BackgroundContainer>
+				<div className={props.className}>
+					<MainHeader></MainHeader>
+					<main className={""}>{props.children}</main>
+				</div>
+				<FooterComponent></FooterComponent>
+			</div>
 		</Fragment>
 	);
 };
