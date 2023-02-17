@@ -2,7 +2,12 @@ import Logo from "../logo/logo";
 import Link from "next/link";
 import { useState } from "react";
 import TextWrapper from "../text-components/text-wrapper";
-const pages = ["About Me", "Projects", "Timeline", "Blog"];
+const pages = [
+	{ title: "Home", endpoint: "/" },
+	{ title: "About Me", endpoint: "/aboutme" },
+	{ title: "Timeline", endpoint: "/timeline" },
+	{ title: "Blog", endpoint: "/blog" },
+];
 
 const MainHeader = function () {
 	const [hamburgerIconState, setHamburgerIconState] = useState("");
@@ -12,17 +17,20 @@ const MainHeader = function () {
 			<nav className="relative container mx-auto p-6 bg-background bg-opacity-50">
 				<div className="flex items-center justify-between">
 					<div className="">
-						<Logo className={"text-xl xl:text-3xl font-bold"}></Logo>
+						<Logo
+							className={"text-xl xl:text-3xl font-bold"}
+						></Logo>
 					</div>
 					<div className="hidden md:flex space-x-10">
 						{pages.map((page, idx) => (
-							<Link
-								href={`/${page.toLowerCase().replace(/ /g, "")}`}
-								key={idx + page}
-							>
+							<Link href={page.endpoint} key={idx + page.title}>
 								<TextWrapper>
-									<span className={"text-font hover:text-fontHover"}>
-										{page}
+									<span
+										className={
+											"text-font hover:text-fontHover"
+										}
+									>
+										{page.title}
 									</span>
 								</TextWrapper>
 							</Link>
@@ -33,7 +41,9 @@ const MainHeader = function () {
 							id="menu-btn"
 							type="button"
 							onClick={() =>
-								setHamburgerIconState(hamburgerIconState ? "" : "open")
+								setHamburgerIconState(
+									hamburgerIconState ? "" : "open"
+								)
 							}
 							className={
 								"z-50 block hamburger md:hidden focus:outline-none " +
@@ -55,12 +65,11 @@ const MainHeader = function () {
 				}
 			>
 				{pages.map((page, idx) => (
-					<Link
-						href={`/${page.toLowerCase().replace(/ /g, "")}`}
-						key={idx + page}
-					>
+					<Link href={page.endpoint} key={idx + page.title}>
 						<TextWrapper>
-							<span className={"text-font hover:text-fontHover"}>{page}</span>
+							<span className={"text-font hover:text-fontHover"}>
+								{page.title}
+							</span>
 						</TextWrapper>
 					</Link>
 				))}

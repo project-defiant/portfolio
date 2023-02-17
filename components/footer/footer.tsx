@@ -38,13 +38,15 @@ const icons = [
 
 const FooterComponent = function () {
 	return (
-		<footer className={"fixed bottom-0 bg-test2 font-black w-full"}>
-			<div className={"flex justify-around items-center p-4"}>
+		<footer className={"absolute bottom-0 bg-test2 font-black w-full z-50"}>
+			<div className={"flex justify-around items-center p-1"}>
 				<section className={"hidden sm:block"}>
 					<span className={"text-xl"}>Szymon Szyszkowski</span>
 				</section>
 				<section
-					className={"flex flex-row gap-6 justify-center contents-center"}
+					className={
+						"flex flex-row gap-6 justify-center contents-center"
+					}
 				>
 					{icons.map((icon, idx) => {
 						return (

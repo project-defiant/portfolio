@@ -1,6 +1,7 @@
 import Logo from "../logo/logo";
 import SpaceShip from "../../public/spaceship-xxl.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 const HeroSection = function () {
 	return (
@@ -43,12 +44,12 @@ const HeroSection = function () {
 					<div className={"container flex flex-col sm:flex-row"}>
 						<div className={"container my-2 p-2"}>
 							<h3 className={"text-font text-xl mb-6"}>Check my blog</h3>
-							<a
-								href="#"
+							<Link
+								href="/blog"
 								className="p-3 px-6 pt-2 text-white bg-lightblueBox rounded-full baseline text-font hover:bg-lightblue"
 							>
 								Recent posts
-							</a>
+							</Link>
 						</div>
 						<div className="container my-2 p-2">
 							<h3 className={"text-font text-xl mb-6"}>Lets work together</h3>

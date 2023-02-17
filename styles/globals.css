@@ -64,3 +64,16 @@ h6 {
 .menu.open {
 	transform: translateX(0%);
 }
+
+p {
+	color: #ebcaca;
+	text-align: justify;
+}
+.icon {
+	width: 3em;
+}
+
+.icon-container {
+	width: 3em;
+	height: 3em;
+}
