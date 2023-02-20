@@ -24,7 +24,7 @@ function initializeOctokit(): OctokitInitializer {
 	};
 }
 
-/**
+/**xXs
  * @description Function to check if filename follows pattern of `XX-title.md`
  * @param filename name of the file to check
  * @returns true if file complies with pattern else false
@@ -49,6 +49,28 @@ async function getPostContent(
 			`GET /repos/${octokitInitializer.owner}/${octokitInitializer.repo}/contents/${path}`
 		);
 		const content = Buffer.from(response.data.content, "base64").toString();
+		return content;
+	} catch (res: unknown) {
+		if (res instanceof RequestError) {
+			switch (res.status) {
+				case 401:
+					console.error("Authentication failed");
+					break;
+				case 404:
+					console.error("Did not received any output");
+					break;
+			}
+		}
+	}
+}
+
+async function getBlogIndex(octokitInitializer: OctokitInitializer) {
+	try {
+		const response = await octokitInitializer.octokit.request(
+			`GET /repos/${octokitInitializer.owner}/${octokitInitializer.repo}/contents/index.json`
+		);
+		const content = Buffer.from(response.data.content, "base64").toString();
+		// const data = JSON.parse(content);
 		return content;
 	} catch (res: unknown) {
 		if (res instanceof RequestError) {
@@ -131,4 +153,11 @@ async function getBlogPosts(octokitInitializer: OctokitInitializer) {
 	}
 }
 
-export { isPost, getBlogPosts, getProjects, getPostContent, initializeOctokit };
+export {
+	isPost,
+	getBlogPosts,
+	getProjects,
+	getPostContent,
+	initializeOctokit,
+	getBlogIndex,
+};

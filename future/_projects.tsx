@@ -2,7 +2,6 @@ import { getProjects, initializeOctokit } from "../scripts/get_post";
 import Link from "next/link";
 
 const ProjectsPage = function ({ projects }) {
-	console.log(projects);
 	return (
 		<div className="flex items-center justify-center">
 			<div className="flex flex-col">

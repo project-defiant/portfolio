@@ -14,10 +14,10 @@ class Star {
 	size: number;
 	opacity: number;
 	constructor() {
-		this.x = Math.random() * 100; // x coordinate
-		this.y = Math.random() * 100; // y coordinate
-		this.z = Math.random() * 100; // distance
-		this.radius = Math.random() * 6;
+		this.x = Number(Number(Math.random() * 100).toFixed(2)); // x coordinate
+		this.y = Number(Number(Math.random() * 100).toFixed(2)); // y coordinate
+		this.z = Number(Number(Math.random() * 100).toFixed(2)); // distance
+		this.radius = Number(Number(Math.random() * 6).toFixed(2));
 		this.size = Math.PI * Math.pow(this.radius, 2);
 		this.opacity = (this.z * this.size) / 10000;
 	}

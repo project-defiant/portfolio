@@ -77,3 +77,27 @@ p {
 	width: 3em;
 	height: 3em;
 }
+
+.btn-active {
+	border-color: #3fa4d1;
+	animation: btn-animation 0.2s linear 0s 2 forwards;
+}
+
+@keyframes btn-animation {
+	25% {
+		transform: translateX(-5%);
+	}
+	50% {
+		transform: translateX(0%);
+	}
+	75% {
+		transform: translateX(5%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+.blog-content * {
+	color: #ebcaca;
+}

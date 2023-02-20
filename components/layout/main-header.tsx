@@ -65,7 +65,11 @@ const MainHeader = function () {
 				}
 			>
 				{pages.map((page, idx) => (
-					<Link href={page.endpoint} key={idx + page.title}>
+					<Link
+						href={page.endpoint}
+						key={idx + page.title}
+						onClick={() => setHamburgerIconState("")}
+					>
 						<TextWrapper>
 							<span className={"text-font hover:text-fontHover"}>
 								{page.title}
