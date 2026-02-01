@@ -33,7 +33,7 @@ function PostPage(props: PostProps) {
 				</header>
 				<ReactMarkdown
 					remarkPlugins={[remarkGfm]}
-					rehypePlugins={[rehypeHighlight]}
+					rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }]]}
 				>
 					{props.content}
 				</ReactMarkdown>

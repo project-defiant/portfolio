@@ -1,6 +1,26 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+	--color-background: #060213;
+	--color-lightblueBox: #3FA4D1;
+	--color-lightblue: #46B9EB;
+	--color-magenta: #B3365B;
+	--color-magentaBox: #B3506E;
+	--color-font: #EBCACA;
+	--color-fontHover: #F6D5C7;
+	--color-test: #000;
+	--color-test2: #fff;
+	--color-test3: #ddd;
+	--color-white: #fff;
+	--color-black: #000;
+	--color-transparent: transparent;
+
+	--breakpoint-sm: 480px;
+	--breakpoint-md: 768px;
+	--breakpoint-lg: 976px;
+	--breakpoint-xl: 1440px;
+}
 
 span,
 h1,
