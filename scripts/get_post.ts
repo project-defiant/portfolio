@@ -8,12 +8,12 @@ interface OctokitInitializer {
 }
 
 /**
- * @description Function to initialize octokit with `GITHUB_TOKEN` from env vars
+ * @description Function to initialize octokit with `PORTFOLIO_TOKEN` from env vars
  * @returns object with `octokit`, `owner` and `repo` attributes
  */
 function initializeOctokit(): OctokitInitializer {
 	const octokit = new Octokit({
-		auth: process.env.GITHUB_TOKEN,
+		auth: process.env.PORTFOLIO_TOKEN,
 	});
 	const owner = "PROJECT-DEFIANT";
 	const repo = "Project-defiant";

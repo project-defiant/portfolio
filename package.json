@@ -50,6 +50,7 @@
     "react-markdown": "^8.0.5",
     "react-remark": "^2.1.0",
     "react-vertical-timeline-component": "^3.6.0",
+    "rehype-highlight": "^7.0.2",
     "rehype-parse": "^8.0.4",
     "rehype-react": "^7.1.2",
     "remark": "^14.0.2",
