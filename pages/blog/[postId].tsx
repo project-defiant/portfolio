@@ -2,6 +2,7 @@ import {
 	getBlogIndex,
 	initializeOctokit,
 	getPostContent,
+	getHtmlContent,
 } from "../../scripts/get_post";
 import { ReactNode } from "react";
 import matter from "gray-matter";
@@ -18,6 +19,7 @@ interface PostProps {
 	date: string;
 	description: string;
 	metadata: unknown;
+	type?: "md" | "rmd";
 }
 
 function PostPage(props: PostProps) {
@@ -31,12 +33,19 @@ function PostPage(props: PostProps) {
 						<p className="text-font/80 mt-2 italic">{props.description}</p>
 					)}
 				</header>
-				<ReactMarkdown
-					remarkPlugins={[remarkGfm]}
-					rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }]]}
-				>
-					{props.content}
-				</ReactMarkdown>
+				{props.type === "rmd" ? (
+					<div
+						className="rmd-content"
+						dangerouslySetInnerHTML={{ __html: props.content }}
+					/>
+				) : (
+					<ReactMarkdown
+						remarkPlugins={[remarkGfm]}
+						rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }]]}
+					>
+						{props.content}
+					</ReactMarkdown>
+				)}
 			</article>
 		</div>
 	);
@@ -49,9 +58,11 @@ export async function getStaticPaths() {
 	const posts = await getBlogIndex(octokit);
 	const data = await JSON.parse(posts);
 	const params = data.map((elem) => {
+		// Strip both .md and .rmd extensions
+		const postId = elem.title.replace(/\.(md|rmd)$/i, "");
 		return {
 			params: {
-				postId: elem.title.replace(".md", ""),
+				postId: postId,
 				postDate: elem.date,
 				postDescription: elem.description,
 			},
@@ -71,21 +82,41 @@ export async function getStaticProps(context) {
 	const octokit = initializeOctokit();
 	const index = await getBlogIndex(octokit);
 	const data = await JSON.parse(index);
-	// get only current post index fields
+	// get only current post index fields (match both .md and .rmd extensions)
 	const metaData = data.filter((post) => {
-		return post.title.replace(".md", "") === postPath;
+		return post.title.replace(/\.(md|rmd)$/i, "") === postPath;
 	})[0];
-	const content = await getPostContent(octokit, postPath + ".md");
+
+	const postType = metaData.type || "md";
 	const date = metaData.date;
 	const description = metaData.description;
-	const parsedContent = matter(content);
-	return {
-		props: {
-			content: parsedContent.content,
-			title: title,
-			date: date,
-			description: description,
-			metadata: parsedContent.data,
-		},
-	};
+
+	if (postType === "rmd") {
+		// For RMD posts, fetch the pre-rendered HTML file
+		const htmlContent = await getHtmlContent(octokit, postPath + ".html");
+		return {
+			props: {
+				content: htmlContent || "",
+				title: title,
+				date: date,
+				description: description,
+				metadata: {},
+				type: "rmd",
+			},
+		};
+	} else {
+		// For markdown posts, use the existing logic
+		const content = await getPostContent(octokit, postPath + ".md");
+		const parsedContent = matter(content);
+		return {
+			props: {
+				content: parsedContent.content,
+				title: title,
+				date: date,
+				description: description,
+				metadata: parsedContent.data,
+				type: "md",
+			},
+		};
+	}
 }

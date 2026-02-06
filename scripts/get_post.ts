@@ -24,13 +24,13 @@ function initializeOctokit(): OctokitInitializer {
 	};
 }
 
-/**xXs
- * @description Function to check if filename follows pattern of `XX-title.md`
+/**
+ * @description Function to check if filename follows pattern of `XX-title.md` or `XX-title.rmd`
  * @param filename name of the file to check
  * @returns true if file complies with pattern else false
  */
 function isPost(filename: string): boolean {
-	const expr = new RegExp("[0-9]+-\\w+.md");
+	const expr = new RegExp("[0-9]+-\\w+\\.(md|rmd)$", "i");
 	return filename.match(expr) ? true : false;
 }
 
@@ -58,6 +58,36 @@ async function getPostContent(
 					break;
 				case 404:
 					console.error("Did not received any output");
+					break;
+			}
+		}
+	}
+}
+
+/**
+ * @description Function to get HTML content for RMD posts (pre-rendered by Quarto/RMarkdown)
+ * @param octokitInitializer initializer object
+ * @param path path to the HTML file in the git repo (e.g., "01-my-post.html")
+ * @returns HTML file content
+ */
+async function getHtmlContent(
+	octokitInitializer: OctokitInitializer,
+	path: string
+): Promise<string | undefined> {
+	try {
+		const response = await octokitInitializer.octokit.request(
+			`GET /repos/${octokitInitializer.owner}/${octokitInitializer.repo}/contents/${path}`
+		);
+		const content = Buffer.from(response.data.content, "base64").toString();
+		return content;
+	} catch (res: unknown) {
+		if (res instanceof RequestError) {
+			switch (res.status) {
+				case 401:
+					console.error("Authentication failed");
+					break;
+				case 404:
+					console.error(`HTML file not found: ${path}`);
 					break;
 			}
 		}
@@ -158,6 +188,7 @@ export {
 	getBlogPosts,
 	getProjects,
 	getPostContent,
+	getHtmlContent,
 	initializeOctokit,
 	getBlogIndex,
 };

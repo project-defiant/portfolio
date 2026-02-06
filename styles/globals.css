@@ -268,3 +268,279 @@ p {
 .blog-content input[type="checkbox"] {
 	margin-right: 0.5em;
 }
+
+/* ===== RMD/Quarto Content Styles ===== */
+/* ===== Tag Word Cloud Styles ===== */
+.word-cloud {
+	max-width: 100%;
+	height: auto;
+}
+
+.word-cloud text {
+	cursor: pointer;
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.word-cloud text:hover {
+	opacity: 0.8;
+}
+
+.rmd-content {
+	color: #ebcaca;
+}
+
+/* Quarto headings */
+.rmd-content h1,
+.rmd-content h2,
+.rmd-content h3,
+.rmd-content h4,
+.rmd-content h5,
+.rmd-content h6 {
+	color: #ebcaca;
+	font-weight: 700;
+	margin-top: 1.5em;
+	margin-bottom: 0.5em;
+}
+
+.rmd-content h1 {
+	font-size: 2em;
+}
+
+.rmd-content h2 {
+	font-size: 1.5em;
+	border-bottom: 1px solid rgba(235, 202, 202, 0.2);
+	padding-bottom: 0.3em;
+}
+
+.rmd-content h3 {
+	font-size: 1.25em;
+}
+
+/* Quarto paragraphs */
+.rmd-content p {
+	color: #ebcaca;
+	margin-bottom: 1em;
+	line-height: 1.7;
+}
+
+/* Quarto links */
+.rmd-content a {
+	color: #46B9EB;
+	text-decoration: underline;
+}
+
+.rmd-content a:hover {
+	color: #3FA4D1;
+}
+
+/* Quarto text formatting */
+.rmd-content strong {
+	color: #ebcaca;
+	font-weight: 700;
+}
+
+.rmd-content em {
+	color: #ebcaca;
+	font-style: italic;
+}
+
+/* Quarto lists */
+.rmd-content ul,
+.rmd-content ol {
+	color: #ebcaca;
+	margin-bottom: 1em;
+	padding-left: 1.5em;
+}
+
+.rmd-content li {
+	color: #ebcaca;
+	margin-bottom: 0.5em;
+}
+
+.rmd-content ul {
+	list-style-type: disc;
+}
+
+.rmd-content ol {
+	list-style-type: decimal;
+}
+
+/* Quarto blockquotes */
+.rmd-content blockquote {
+	border-left: 4px solid #B3365B;
+	padding-left: 1em;
+	margin: 1em 0;
+	color: #ebcaca;
+	opacity: 0.9;
+	font-style: italic;
+}
+
+/* Quarto inline code */
+.rmd-content code {
+	color: #f0abfc;
+	background-color: rgba(255, 255, 255, 0.1);
+	padding: 0.2em 0.4em;
+	border-radius: 4px;
+	font-size: 0.9em;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Quarto code blocks */
+.rmd-content pre {
+	background-color: #1a1a2e !important;
+	border-radius: 8px;
+	padding: 1em;
+	overflow-x: auto;
+	margin: 1em 0;
+	border: 1px solid rgba(235, 202, 202, 0.1);
+}
+
+.rmd-content pre code {
+	background-color: transparent;
+	padding: 0;
+	color: #ebcaca;
+	font-size: 0.875em;
+	line-height: 1.6;
+}
+
+/* Quarto tables */
+.rmd-content table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 1em 0;
+}
+
+.rmd-content th,
+.rmd-content td {
+	color: #ebcaca;
+	border: 1px solid rgba(235, 202, 202, 0.2);
+	padding: 0.5em 1em;
+	text-align: left;
+}
+
+.rmd-content th {
+	background-color: rgba(255, 255, 255, 0.05);
+	font-weight: 700;
+}
+
+.rmd-content tr:nth-child(even) {
+	background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Quarto images and figures */
+.rmd-content img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+	margin: 1em 0;
+}
+
+.rmd-content figure {
+	margin: 1.5em 0;
+	text-align: center;
+}
+
+.rmd-content figcaption {
+	color: #ebcaca;
+	opacity: 0.8;
+	font-size: 0.9em;
+	font-style: italic;
+	margin-top: 0.5em;
+}
+
+/* Quarto horizontal rules */
+.rmd-content hr {
+	border: none;
+	border-top: 1px solid rgba(235, 202, 202, 0.2);
+	margin: 2em 0;
+}
+
+/* Quarto code cell output containers */
+.rmd-content .cell {
+	margin: 1em 0;
+}
+
+.rmd-content .cell-output {
+	margin-top: 0.5em;
+}
+
+.rmd-content .cell-output-display {
+	margin: 1em 0;
+}
+
+/* Quarto source code styling */
+.rmd-content .sourceCode {
+	background-color: #1a1a2e !important;
+	border-radius: 8px;
+	border: 1px solid rgba(235, 202, 202, 0.1);
+}
+
+/* Quarto code highlighting - syntax colors */
+.rmd-content .sourceCode .kw { color: #c792ea; } /* keywords */
+.rmd-content .sourceCode .dt { color: #ffcb6b; } /* data types */
+.rmd-content .sourceCode .dv { color: #f78c6c; } /* decimal values */
+.rmd-content .sourceCode .bn { color: #f78c6c; } /* base N */
+.rmd-content .sourceCode .fl { color: #f78c6c; } /* float */
+.rmd-content .sourceCode .ch { color: #c3e88d; } /* char */
+.rmd-content .sourceCode .st { color: #c3e88d; } /* string */
+.rmd-content .sourceCode .co { color: #676e95; } /* comment */
+.rmd-content .sourceCode .ot { color: #89ddff; } /* other */
+.rmd-content .sourceCode .fu { color: #82aaff; } /* function */
+.rmd-content .sourceCode .er { color: #ff5370; } /* error */
+.rmd-content .sourceCode .wa { color: #ffcb6b; } /* warning */
+.rmd-content .sourceCode .cn { color: #f78c6c; } /* constant */
+.rmd-content .sourceCode .sc { color: #c3e88d; } /* special char */
+.rmd-content .sourceCode .vs { color: #c3e88d; } /* verbatim string */
+.rmd-content .sourceCode .ss { color: #c3e88d; } /* special string */
+.rmd-content .sourceCode .va { color: #f07178; } /* variable */
+.rmd-content .sourceCode .cf { color: #c792ea; } /* control flow */
+.rmd-content .sourceCode .op { color: #89ddff; } /* operator */
+.rmd-content .sourceCode .pp { color: #c792ea; } /* preprocessor */
+.rmd-content .sourceCode .at { color: #ffcb6b; } /* attribute */
+.rmd-content .sourceCode .do { color: #676e95; font-style: italic; } /* documentation */
+.rmd-content .sourceCode .an { color: #ffcb6b; } /* annotation */
+.rmd-content .sourceCode .cv { color: #676e95; font-style: italic; } /* comment var */
+.rmd-content .sourceCode .in { color: #676e95; } /* information */
+
+/* Quarto callouts */
+.rmd-content .callout {
+	margin: 1.5em 0;
+	padding: 1em;
+	border-radius: 8px;
+	border-left: 4px solid;
+}
+
+.rmd-content .callout-note {
+	background-color: rgba(70, 185, 235, 0.1);
+	border-color: #46B9EB;
+}
+
+.rmd-content .callout-warning {
+	background-color: rgba(255, 203, 107, 0.1);
+	border-color: #ffcb6b;
+}
+
+.rmd-content .callout-important {
+	background-color: rgba(179, 54, 91, 0.1);
+	border-color: #B3365B;
+}
+
+.rmd-content .callout-tip {
+	background-color: rgba(195, 232, 141, 0.1);
+	border-color: #c3e88d;
+}
+
+.rmd-content .callout-title {
+	font-weight: 700;
+	margin-bottom: 0.5em;
+}
+
+/* Quarto math/equations */
+.rmd-content .math {
+	color: #ebcaca;
+}
+
+.rmd-content .math.display {
+	overflow-x: auto;
+	padding: 1em 0;
+}
