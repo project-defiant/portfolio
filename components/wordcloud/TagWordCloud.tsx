@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import * as d3 from "d3";
 import cloud from "d3-cloud";
 
@@ -48,21 +48,27 @@ export default function TagWordCloud({ tags, onTagClick, selectedTag }: TagWordC
 	const svgRef = useRef<SVGSVGElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [dimensions, setDimensions] = useState({ width: 600, height: 400 });
+	const [layoutWords, setLayoutWords] = useState<CloudWord[]>([]);
 
-	// Count tag occurrences
-	const tagCounts = tags.reduce((acc: Record<string, number>, tag: string) => {
-		acc[tag] = (acc[tag] || 0) + 1;
-		return acc;
-	}, {});
+	// Use ref to always have the latest callback without triggering re-renders
+	const onTagClickRef = useRef(onTagClick);
+	onTagClickRef.current = onTagClick;
 
-	// Convert to array and sort by count
-	const tagData: TagData[] = Object.entries(tagCounts)
-		.map(([text, count]) => ({
-			text,
-			count,
-			size: count,
-		}))
-		.sort((a, b) => b.count - a.count);
+	// Count tag occurrences - memoized
+	const tagData: TagData[] = useMemo(() => {
+		const tagCounts = tags.reduce((acc: Record<string, number>, tag: string) => {
+			acc[tag] = (acc[tag] || 0) + 1;
+			return acc;
+		}, {});
+
+		return Object.entries(tagCounts)
+			.map(([text, count]) => ({
+				text,
+				count,
+				size: count,
+			}))
+			.sort((a, b) => b.count - a.count);
+	}, [tags]);
 
 	// Update dimensions on resize
 	useEffect(() => {
@@ -81,11 +87,9 @@ export default function TagWordCloud({ tags, onTagClick, selectedTag }: TagWordC
 		return () => window.removeEventListener("resize", updateDimensions);
 	}, []);
 
+	// Calculate layout only when tagData or dimensions change
 	useEffect(() => {
-		if (!svgRef.current || tagData.length === 0) return;
-
-		const svg = d3.select(svgRef.current);
-		svg.selectAll("*").remove();
+		if (tagData.length === 0) return;
 
 		const { width, height } = dimensions;
 
@@ -96,10 +100,6 @@ export default function TagWordCloud({ tags, onTagClick, selectedTag }: TagWordC
 			.scaleLinear()
 			.domain([minCount, maxCount])
 			.range([16, 60]);
-
-		// Color scale using the site's theme colors
-		const colors = ["#46B9EB", "#B3365B", "#3FA4D1", "#B3506E", "#EBCACA"];
-		const colorScale = d3.scaleOrdinal(colors);
 
 		// Create a deterministic seed based on all tag names
 		const seedString = tagData.map(d => d.text).sort().join(",");
@@ -129,64 +129,79 @@ export default function TagWordCloud({ tags, onTagClick, selectedTag }: TagWordC
 			.font("Alef")
 			.fontSize((d) => d.size || 16)
 			.spiral("archimedean")
-			.on("end", draw);
-
-		function draw(words: CloudWord[]) {
-			const g = svg
-				.attr("width", width)
-				.attr("height", height)
-				.append("g")
-				.attr("transform", `translate(${width / 2},${height / 2})`);
-
-			g.selectAll("text")
-				.data(words)
-				.enter()
-				.append("text")
-				.style("font-size", (d) => `${d.size}px`)
-				.style("font-family", "Alef, sans-serif")
-				.style("font-weight", "700")
-				.style("fill", (d) => {
-					// Highlight selected tag
-					if (selectedTag && d.text === selectedTag) {
-						return "#46B9EB";
-					}
-					return colorScale(d.text || "");
-				})
-				.style("opacity", (d) => {
-					// Dim non-selected tags when a tag is selected
-					if (selectedTag && d.text !== selectedTag) {
-						return 0.4;
-					}
-					return 1;
-				})
-				.style("cursor", "pointer")
-				.style("transition", "all 0.2s ease")
-				.attr("text-anchor", "middle")
-				.attr("transform", (d) => `translate(${d.x},${d.y}) rotate(${d.rotate})`)
-				.text((d) => d.text || "")
-				.on("mouseover", function (event, d) {
-					if (selectedTag !== d.text) {
-						d3.select(this).style("opacity", 0.7);
-					}
-				})
-				.on("mouseout", function (event, d) {
-					if (selectedTag && d.text !== selectedTag) {
-						d3.select(this).style("opacity", 0.4);
-					} else {
-						d3.select(this).style("opacity", 1);
-					}
-				})
-				.on("click", function (event, d) {
-					if (onTagClick && d.text) {
-						onTagClick(d.text);
-					}
-				})
-				.append("title")
-				.text((d) => `${d.text}: ${d.count} post${d.count > 1 ? "s" : ""} (click to filter)`);
-		}
+			.on("end", (words) => {
+				setLayoutWords(words);
+			});
 
 		layout.start();
-	}, [tagData, dimensions, onTagClick, selectedTag]);
+	}, [tagData, dimensions]);
+
+	// Render/update SVG when layout or selectedTag changes
+	useEffect(() => {
+		if (!svgRef.current || layoutWords.length === 0) return;
+
+		const svg = d3.select(svgRef.current);
+		svg.selectAll("*").remove();
+
+		const { width, height } = dimensions;
+
+		// Color scale using the site's theme colors
+		const colors = ["#46B9EB", "#B3365B", "#3FA4D1", "#B3506E", "#EBCACA"];
+		const colorScale = d3.scaleOrdinal(colors);
+
+		const g = svg
+			.attr("width", width)
+			.attr("height", height)
+			.append("g")
+			.attr("transform", `translate(${width / 2},${height / 2})`);
+
+		g.selectAll("text")
+			.data(layoutWords)
+			.enter()
+			.append("text")
+			.style("font-size", (d) => `${d.size}px`)
+			.style("font-family", "Alef, sans-serif")
+			.style("font-weight", "700")
+			.style("fill", (d) => {
+				// Highlight selected tag
+				if (selectedTag && d.text === selectedTag) {
+					return "#46B9EB";
+				}
+				return colorScale(d.text || "");
+			})
+			.style("opacity", (d) => {
+				// Dim non-selected tags when a tag is selected
+				if (selectedTag && d.text !== selectedTag) {
+					return 0.4;
+				}
+				return 1;
+			})
+			.style("cursor", "pointer")
+			.style("transition", "all 0.2s ease")
+			.attr("text-anchor", "middle")
+			.attr("transform", (d) => `translate(${d.x},${d.y}) rotate(${d.rotate})`)
+			.text((d) => d.text || "")
+			.on("mouseover", function (event, d) {
+				if (selectedTag !== d.text) {
+					d3.select(this).style("opacity", 0.7);
+				}
+			})
+			.on("mouseout", function (event, d) {
+				if (selectedTag && d.text !== selectedTag) {
+					d3.select(this).style("opacity", 0.4);
+				} else {
+					d3.select(this).style("opacity", 1);
+				}
+			})
+			.on("click", function (event, d) {
+				// Use ref to get the latest callback
+				if (onTagClickRef.current && d.text) {
+					onTagClickRef.current(d.text);
+				}
+			})
+			.append("title")
+			.text((d) => `${d.text}: ${d.count} post${d.count > 1 ? "s" : ""} (click to filter)`);
+	}, [layoutWords, selectedTag, dimensions]);
 
 	if (tagData.length === 0) {
 		return (

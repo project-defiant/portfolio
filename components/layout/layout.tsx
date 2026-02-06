@@ -11,11 +11,11 @@ interface LayoutProps {
 const Layout = function (props: LayoutProps) {
 	return (
 		<Fragment>
-			<div className="relative container overflow-hidden max-w-full min-h-screen">
+			<div className="relative flex flex-col max-w-full min-h-screen">
 				<BackgroundContainer></BackgroundContainer>
-				<div className={props.className}>
+				<div className={`flex-grow ${props.className}`}>
 					<MainHeader></MainHeader>
-					<main className={""}>{props.children}</main>
+					<main>{props.children}</main>
 				</div>
 				<FooterComponent></FooterComponent>
 			</div>
