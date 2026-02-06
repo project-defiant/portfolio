@@ -1,8 +1,8 @@
 import { Fragment, ReactNode } from "react";
 import MainHeader from "./main-header";
 import BackgroundContainer from "./background";
-import { Alef } from "@next/font/google";
 import FooterComponent from "../footer/footer";
+
 interface LayoutProps {
 	children?: ReactNode | undefined;
 	className?: string;

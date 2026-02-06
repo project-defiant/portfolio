@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import Link from "next/link";
+import HyperspaceLink from "../hyperspace/hyperspace-link";
 import TextWrapper from "../text-components/text-wrapper";
 
 interface LogoProps {
@@ -9,13 +9,13 @@ interface LogoProps {
 const Logo = function (props: LogoProps) {
 	return (
 		<Fragment>
-			<Link href="/" className={props.className}>
+			<HyperspaceLink href="/" className={props.className}>
 				<TextWrapper>
 					<span className={"text-font"}>{"project"}</span>
 					<span className={"text-lightblue"}>{"::"}</span>
 					<span className={"text-font"}>{"defiant"}</span>
 				</TextWrapper>
-			</Link>
+			</HyperspaceLink>
 		</Fragment>
 	);
 };

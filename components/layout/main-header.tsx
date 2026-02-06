@@ -1,5 +1,5 @@
 import Logo from "../logo/logo";
-import Link from "next/link";
+import HyperspaceLink from "../hyperspace/hyperspace-link";
 import { useState } from "react";
 import TextWrapper from "../text-components/text-wrapper";
 const pages = [
@@ -23,7 +23,7 @@ const MainHeader = function () {
 					</div>
 					<div className="hidden md:flex space-x-10">
 						{pages.map((page, idx) => (
-							<Link href={page.endpoint} key={idx + page.title}>
+							<HyperspaceLink href={page.endpoint} key={idx + page.title}>
 								<TextWrapper>
 									<span
 										className={
@@ -33,7 +33,7 @@ const MainHeader = function () {
 										{page.title}
 									</span>
 								</TextWrapper>
-							</Link>
+							</HyperspaceLink>
 						))}
 					</div>
 					<div className="md:hidden">
@@ -65,7 +65,7 @@ const MainHeader = function () {
 				}
 			>
 				{pages.map((page, idx) => (
-					<Link
+					<HyperspaceLink
 						href={page.endpoint}
 						key={idx + page.title}
 						onClick={() => setHamburgerIconState("")}
@@ -75,7 +75,7 @@ const MainHeader = function () {
 								{page.title}
 							</span>
 						</TextWrapper>
-					</Link>
+					</HyperspaceLink>
 				))}
 			</div>
 		</header>

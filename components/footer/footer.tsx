@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import HyperspaceLink from "../hyperspace/hyperspace-link";
 import GithubIcon from "../../public/github.svg";
 import LinkedInIcon from "../../public/linkedin.svg";
 import YouTubeIcon from "../../public/you-tube.svg";
@@ -156,13 +157,13 @@ const FooterComponent = function () {
 						</h4>
 						<nav className="flex flex-wrap justify-center gap-x-6 gap-y-2">
 							{navLinks.map((link) => (
-								<Link
+								<HyperspaceLink
 									key={link.href}
 									href={link.href}
 									className="text-font/60 hover:text-lightblue transition-colors duration-300 text-sm"
 								>
 									{link.label}
-								</Link>
+								</HyperspaceLink>
 							))}
 						</nav>
 					</div>

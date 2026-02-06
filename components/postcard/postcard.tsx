@@ -1,8 +1,8 @@
-import Link from "next/link";
+import HyperspaceLink from "../hyperspace/hyperspace-link";
 
 const PostCard = function (props) {
 	return (
-		<Link
+		<HyperspaceLink
 			href={props.href}
 			className="flex flex-col justify-start items-start p-2 rounded m-2 bg-transparent hover:bg-blue-500 bg-background text-font font-semibold hover:text-white py-2 px-4 border border-font hover:border-transparent w-full"
 		>
@@ -28,7 +28,7 @@ const PostCard = function (props) {
 			<span className="text-font">uploaded at {props.date}</span>
 
 			<p className="text-l">{props.description}</p>
-		</Link>
+		</HyperspaceLink>
 	);
 };
 
