@@ -5,14 +5,14 @@ import HyperspaceLink from "../hyperspace/hyperspace-link";
 
 const HeroSection = function () {
 	return (
-		<section className="grid grid-rows-6 grid-cols-6 md:grid-rows-4 my-10">
+		<section className="grid grid-rows-6 grid-cols-6 md:grid-rows-4 my-10 overflow-hidden">
 			<div className="relative container col-start-1 col-span-5 row-span-3 row-start-1">
 				<div className="relative">
 					<Image
 						priority={true}
 						alt="Project defiant logo"
 						src={SpaceShip}
-						className={"md:relative xl:bottom-20"}
+						className={"w-full h-auto md:relative xl:bottom-20"}
 					></Image>
 					<div className="absolute top-1/2 left-1/2">
 						<Logo
