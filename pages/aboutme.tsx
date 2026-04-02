@@ -3,9 +3,9 @@ import Image from "next/image";
 
 const AboutPage = () => {
 	return (
-		<div className="flex flex-col lg:flex-row contents-center items-center my-32 lg:my-0  bg-opacity-40 bg-background">
-			<div className="container">
-				<Image src={SelfImage} alt="Szymon Szyszkowski"></Image>
+		<div className="flex flex-col lg:flex-row contents-center items-center my-8 lg:my-0 bg-opacity-40 bg-background">
+			<div className="container flex justify-center">
+				<Image src={SelfImage} alt="Szymon Szyszkowski" className="w-full h-auto max-w-sm lg:max-w-md"></Image>
 			</div>
 			<div className="container p-5 lg:mb-32">
 				<h1 className="text-font font-bold text-4xl">Who Am I ?</h1>
