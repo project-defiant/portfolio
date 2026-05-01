@@ -1,5 +1,9 @@
 # build output
 dist/
+src/content/blog/imported/
+src/generated/obsidian/
+src/generated/backfill/
+test/runtime/
 # generated types
 .astro/
 

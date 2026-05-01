@@ -1,0 +1,86 @@
+---
+import type { BlogTagOption } from '../../content/blog';
+
+interface Props {
+tags: BlogTagOption[];
+activeTagSlug?: string;
+}
+
+const { tags, activeTagSlug } = Astro.props;
+---
+
+<nav class="tag-filters" aria-label="Filter blog posts by topic">
+<p class="tag-filters__label">Filter by topic</p>
+<div class="tag-filters__items">
+<a class="tag-filter" href="/blog/" aria-current={activeTagSlug ? undefined : 'page'}>
+All posts
+</a>
+{
+tags.map((tag) => (
+<a
+class="tag-filter"
+href={`/blog/tags/${tag.slug}/`}
+aria-current={activeTagSlug === tag.slug ? 'page' : undefined}
+>
+{tag.label}
+<span>{tag.count}</span>
+</a>
+))
+}
+</div>
+</nav>
+
+<style>
+.tag-filters {
+display: grid;
+gap: 0.75rem;
+margin-bottom: 2rem;
+}
+
+.tag-filters__label {
+margin: 0;
+font-size: 0.85rem;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+color: rgb(var(--color-text-muted));
+}
+
+.tag-filters__items {
+display: flex;
+flex-wrap: wrap;
+gap: 0.75rem;
+}
+
+.tag-filter {
+display: inline-flex;
+align-items: center;
+gap: 0.5rem;
+padding: 0.65rem 0.95rem;
+border-radius: 999px;
+background: rgba(var(--color-surface), 0.9);
+border: 1px solid rgba(var(--color-border), 0.24);
+color: rgb(var(--color-text));
+font-size: 0.95rem;
+}
+
+.tag-filter span {
+color: rgb(var(--color-text-muted));
+font-size: 0.8em;
+}
+
+.tag-filter[aria-current='page'] {
+border-color: rgba(var(--color-accent), 0.4);
+background: rgba(var(--color-accent), 0.12);
+color: rgb(var(--color-accent-strong));
+}
+
+@media (max-width: 720px) {
+.tag-filters__items {
+gap: 0.5rem;
+}
+
+.tag-filter {
+font-size: 0.9rem;
+}
+}
+</style>

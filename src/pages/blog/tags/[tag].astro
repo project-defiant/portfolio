@@ -1,0 +1,66 @@
+---
+import BlogPostList from '../../../components/blog/BlogPostList.astro';
+import BlogTagFilters from '../../../components/blog/BlogTagFilters.astro';
+import { collectBlogTags, getPostsForTag, getPreparedBlogPosts } from '../../../content/blog';
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+
+export async function getStaticPaths() {
+const posts = await getPreparedBlogPosts();
+return collectBlogTags(posts).map((tag) => ({
+params: { tag: tag.slug },
+props: { posts, activeTag: tag },
+}));
+}
+
+const { posts, activeTag } = Astro.props;
+const filteredPosts = getPostsForTag(posts, activeTag.slug);
+const tags = collectBlogTags(posts);
+---
+
+<SiteLayout
+title={`Blog · ${activeTag.label}`}
+description={`PROJECT-DEFIANT posts tagged ${activeTag.label}.`}
+mainClass="blog-shell"
+>
+<Fragment slot="head">
+<style>
+.blog-shell {
+width: min(100%, 960px);
+max-width: calc(100% - 2rem);
+}
+
+.blog-intro {
+display: grid;
+gap: 0.85rem;
+margin-bottom: 2rem;
+}
+
+.blog-intro__eyebrow {
+margin: 0;
+font-size: 0.85rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: rgb(var(--color-text-muted));
+}
+
+.blog-intro h1,
+.blog-intro p {
+margin: 0;
+}
+
+.blog-intro p:last-child {
+max-width: 42rem;
+color: rgb(var(--color-text-muted));
+}
+</style>
+</Fragment>
+
+<section class="blog-intro">
+<p class="blog-intro__eyebrow">Blog topic</p>
+<h1>{activeTag.label}</h1>
+<p>{activeTag.count} post{activeTag.count === 1 ? '' : 's'} filed under this topic.</p>
+</section>
+
+<BlogTagFilters tags={tags} activeTagSlug={activeTag.slug} />
+<BlogPostList posts={filteredPosts} />
+</SiteLayout>

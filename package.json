@@ -3,11 +3,15 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "prebuild": "node scripts/materialize-obsidian-blog.mjs",
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "rm -rf dist && astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "sync:obsidian": "node scripts/obsidian-sync.mjs",
+    "backfill:blog": "node scripts/backfill-published-posts.mjs",
+    "test": "npm run build && node --test"
   },
   "dependencies": {
     "@astrojs/mdx": "^3.1.8",

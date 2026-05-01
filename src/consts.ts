@@ -1,5 +1,4 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
+import { siteConfig } from './site-config';
 
-export const SITE_TITLE = 'Astro Blog';
-export const SITE_DESCRIPTION = 'Welcome to my website!';
+export const SITE_TITLE = siteConfig.identity.brand;
+export const SITE_DESCRIPTION = siteConfig.identity.description;

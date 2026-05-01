@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import RedirectPage from '../../layouts/RedirectPage.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+	}));
+}
+
+const slug = Astro.params.slug;
+---
+
+<RedirectPage to={`/blog/${slug}`} />

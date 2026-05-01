@@ -1,0 +1,126 @@
+---
+import FormattedDate from '../FormattedDate.astro';
+import type { PreparedBlogPost } from '../../content/blog';
+
+interface Props {
+posts: PreparedBlogPost[];
+}
+
+const { posts } = Astro.props;
+---
+
+<ol class="blog-feed">
+{
+posts.map((post) => (
+<li>
+<article class="post-card">
+<header class="post-card__header">
+<p class="post-card__meta-line">
+Published <FormattedDate date={post.pubDate} />
+{post.updatedDate && (
+<Fragment>
+<span aria-hidden="true"> • </span>
+Updated <FormattedDate date={post.updatedDate} />
+</Fragment>
+)}
+<span aria-hidden="true"> • </span>
+{post.readingTimeMinutes} min read
+</p>
+<h2>
+<a href={`/blog/${post.slug}/`}>{post.title}</a>
+</h2>
+<p class="post-card__description">{post.description}</p>
+</header>
+{
+post.tags.length > 0 && (
+<ul class="post-card__tags" aria-label={`Topics for ${post.title}`}>
+{
+post.tags.map((tag) => (
+<li>
+<a href={`/blog/tags/${tag.slug}/`}>{tag.label}</a>
+</li>
+))
+}
+</ul>
+)
+}
+</article>
+</li>
+))
+}
+</ol>
+
+<style>
+.blog-feed {
+list-style: none;
+padding: 0;
+margin: 0;
+display: grid;
+gap: 1rem;
+}
+
+.post-card {
+padding: 1.4rem 1.5rem;
+border-radius: 28px;
+background: rgba(var(--color-surface), 0.78);
+border: 1px solid rgba(var(--color-border), 0.2);
+}
+
+.post-card__header {
+display: grid;
+gap: 0.75rem;
+}
+
+.post-card__meta-line,
+.post-card__description {
+margin: 0;
+}
+
+.post-card__meta-line {
+color: rgb(var(--color-text-muted));
+font-size: 0.95rem;
+}
+
+.post-card h2 {
+margin: 0;
+font-size: clamp(1.65rem, 4vw, 2.3rem);
+}
+
+.post-card h2 a {
+color: inherit;
+}
+
+.post-card__description {
+max-width: 44rem;
+color: rgb(var(--color-text-muted));
+}
+
+.post-card__tags {
+list-style: none;
+padding: 0;
+margin: 1rem 0 0;
+display: flex;
+flex-wrap: wrap;
+gap: 0.65rem;
+}
+
+.post-card__tags a {
+display: inline-flex;
+padding: 0.35rem 0.75rem;
+border-radius: 999px;
+background: rgba(var(--color-surface-muted), 0.9);
+color: rgb(var(--color-text-muted));
+font-size: 0.85rem;
+}
+
+@media (max-width: 720px) {
+.post-card {
+padding: 1.15rem;
+border-radius: 22px;
+}
+
+.post-card__meta-line {
+font-size: 0.9rem;
+}
+}
+</style>

@@ -1,0 +1,25 @@
+name: Obsidian Blog Sync
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * 5'
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run sync:obsidian -- --trigger=${{ github.event_name }}
+      - run: npm run build

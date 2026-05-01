@@ -1,0 +1,209 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { getResumeEntries, resumeSections, resumeSummary } from '../data/resume';
+---
+
+<SiteLayout
+	title="Resume"
+	description="Resume for Szymon Szyszkowski: computational biology, bioinformatics software delivery, and structured career timeline."
+>
+	<section class="resume-shell">
+		<header class="summary-card">
+			<p class="eyebrow">Resume</p>
+			<h1>Resume</h1>
+			{resumeSummary.map((paragraph) => <p>{paragraph}</p>)}
+		</header>
+
+		{
+			resumeSections.map((section) => (
+				<section class="resume-section" aria-labelledby={`${section.id}-title`}>
+					<div class="section-heading">
+						<h2 id={`${section.id}-title`}>{section.title}</h2>
+						<p>{section.description}</p>
+					</div>
+
+					<ol class="entry-list">
+						{getResumeEntries(section.id).map((entry) => (
+							<li>
+								<article class="entry-card">
+									<div class="entry-header">
+										<div>
+											<h3>{entry.role}</h3>
+											<p class="organization">{entry.organization}</p>
+										</div>
+										<dl class="entry-meta">
+											<div>
+												<dt>Period</dt>
+												<dd>{entry.period}</dd>
+											</div>
+											{entry.location && (
+												<div>
+													<dt>Location</dt>
+													<dd>{entry.location}</dd>
+												</div>
+											)}
+										</dl>
+									</div>
+
+									<p class="entry-summary">{entry.summary}</p>
+
+									{entry.highlights && (
+										<ul class="highlights">
+											{entry.highlights.map((highlight) => <li>{highlight}</li>)}
+										</ul>
+									)}
+
+									{entry.skills && (
+										<ul class="skill-list" aria-label={`Focus areas for ${entry.organization}`}>
+											{entry.skills.map((skill) => <li>{skill}</li>)}
+										</ul>
+									)}
+								</article>
+							</li>
+						))}
+					</ol>
+				</section>
+			))
+		}
+	</section>
+</SiteLayout>
+
+<style>
+	.resume-shell {
+		display: grid;
+		gap: 2rem;
+	}
+
+	.summary-card,
+	.entry-card {
+		padding: clamp(1.35rem, 2vw, 2rem);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: 24px;
+		background: rgba(8, 12, 20, 0.6);
+		box-shadow: var(--box-shadow);
+	}
+
+	.summary-card {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.summary-card p,
+	.section-heading p,
+	.entry-summary {
+		max-width: 58rem;
+		margin: 0;
+	}
+
+	.eyebrow,
+	.entry-meta dt,
+	.organization,
+	.skill-list li {
+		font-size: 0.82rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.eyebrow,
+	.organization,
+	.entry-meta dt {
+		color: rgb(var(--color-accent-strong));
+		font-weight: 700;
+	}
+
+	.resume-section {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.section-heading {
+		display: grid;
+		gap: 0.35rem;
+	}
+
+	.section-heading h2,
+	.entry-header h3 {
+		margin: 0;
+	}
+
+	.entry-list,
+	.highlights,
+	.skill-list {
+		margin: 0;
+		padding: 0;
+	}
+
+	.entry-list {
+		list-style: none;
+		display: grid;
+		gap: 1rem;
+	}
+
+	.entry-card {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.entry-header {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		justify-content: space-between;
+		align-items: start;
+	}
+
+	.organization {
+		margin: 0.35rem 0 0;
+	}
+
+	.entry-meta {
+		margin: 0;
+		display: grid;
+		gap: 0.6rem;
+		min-width: 12rem;
+	}
+
+	.entry-meta div {
+		display: grid;
+		gap: 0.2rem;
+	}
+
+	.entry-meta dd {
+		margin: 0;
+		color: rgb(var(--color-text));
+		font-weight: 600;
+	}
+
+	.highlights {
+		list-style: disc;
+		padding-left: 1.2rem;
+		display: grid;
+		gap: 0.5rem;
+	}
+
+	.skill-list {
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.65rem;
+	}
+
+	.skill-list li {
+		padding: 0.45rem 0.7rem;
+		border: 1px solid rgba(var(--color-accent), 0.28);
+		border-radius: 999px;
+		background: rgba(var(--color-accent), 0.12);
+		color: rgb(var(--color-text));
+		font-weight: 700;
+	}
+
+	@media (max-width: 720px) {
+		.entry-header {
+			display: grid;
+		}
+
+		.entry-meta {
+			min-width: 0;
+		}
+	}
+</style>

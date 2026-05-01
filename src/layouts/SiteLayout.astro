@@ -1,0 +1,41 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+title?: string;
+description?: string;
+image?: string;
+mainClass?: string;
+}
+
+const { title, description, image, mainClass } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-motion="full">
+<head>
+<BaseHead title={title} description={description} image={image} />
+<script is:inline>
+	(() => {
+		const root = document.documentElement;
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		const constrainedDevice =
+			window.matchMedia('(max-width: 720px)').matches ||
+			window.matchMedia('(hover: none)').matches ||
+			navigator.connection?.saveData === true;
+
+		root.dataset.motion = reducedMotion ? 'reduce' : constrainedDevice ? 'lite' : 'full';
+	})();
+</script>
+<slot name="head" />
+</head>
+<body>
+<Header />
+<main class={mainClass}>
+<slot />
+</main>
+<Footer />
+</body>
+</html>

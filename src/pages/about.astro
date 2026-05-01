@@ -1,62 +1,150 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { aboutIdentity, aboutNarrative, aboutTraits } from '../data/about-content';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage="/blog-placeholder-about.jpg"
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<SiteLayout title="About" description="The narrative arc behind PROJECT-DEFIANT: biotechnology, omics, software engineering, and the traits that shape the work.">
+  <section class="hero">
+    <p class="eyebrow">About</p>
+    <h1>Szymon Szyszkowski</h1>
+    <p class="lede">
+      PROJECT-DEFIANT is the prose-first home for the path that connects childhood curiosity,
+      biotechnology, genome work, omics, and software engineering.
+    </p>
+  </section>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+  <section class="narrative" aria-labelledby="about-arc-title">
+    <div class="section-heading">
+      <p class="eyebrow">Narrative arc</p>
+      <h2 id="about-arc-title">From life science to software, without losing either.</h2>
+    </div>
+    <div class="story-grid">
+      {aboutNarrative.map((section) => (
+        <article class="story-card">
+          <p class="card-eyebrow">{section.eyebrow}</p>
+          <h3>{section.title}</h3>
+          {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </article>
+      ))}
+    </div>
+  </section>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+  <section class="identity" aria-labelledby="about-identity-title">
+    <div class="section-heading">
+      <p class="eyebrow">Identity</p>
+      <h2 id="about-identity-title">Inventor, scientist, and engineer.</h2>
+    </div>
+    <div class="identity-copy">
+      {aboutIdentity.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </section>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+  <section class="traits" aria-labelledby="about-traits-title">
+    <div class="section-heading">
+      <p class="eyebrow">Traits</p>
+      <h2 id="about-traits-title">The principles that keep the work moving.</h2>
+    </div>
+    <ul class="trait-grid">
+      {aboutTraits.map((trait) => (
+        <li class="trait-card">
+          <h3>{trait.title}</h3>
+          <p>{trait.description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</SiteLayout>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+<style>
+  .hero,
+  .narrative,
+  .identity,
+  .traits {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .hero {
+    padding-top: 1rem;
+  }
+
+  .section-heading {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .eyebrow,
+  .card-eyebrow {
+    margin: 0;
+    color: rgb(var(--color-accent));
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .lede,
+  .identity-copy,
+  .story-card p,
+  .trait-card p {
+    max-width: 42rem;
+    margin: 0;
+  }
+
+  .narrative,
+  .identity,
+  .traits {
+    margin-top: 3rem;
+  }
+
+  .story-grid,
+  .trait-grid {
+    display: grid;
+    gap: 1rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .story-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .trait-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .story-card,
+  .trait-card,
+  .identity-copy {
+    padding: 1.4rem;
+    border: 1px solid rgba(var(--color-border), 0.28);
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(var(--color-surface), 0.88), rgba(var(--color-surface-muted), 0.62));
+    box-shadow: var(--box-shadow);
+  }
+
+  .story-card,
+  .trait-card {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .story-card h3,
+  .trait-card h3,
+  .section-heading h2 {
+    margin: 0;
+  }
+
+  .identity-copy {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .story-grid,
+    .trait-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

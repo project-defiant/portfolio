@@ -1,50 +1,330 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const heroImage = '/images/spaceship-hero.jpg';
+const intro =
+	'Project Defiant is Szymon Szyszkowski’s launchpad for life science, programming, and thoughtful technical storytelling.';
+const contactHref =
+	'mailto:szymonszyszkowski@gmail.com?subject=Project%20Defiant%20inquiry&body=Hi%20Szymon%2C%0A%0AI%27d%20like%20to%20talk%20about%3A%0A%0AProject%2Fmission%3A%0ATimeline%3A%0A%0AThanks!';
+const missionSignals = [
+	['Vector', 'Life science × programming'],
+	['Output', 'Blog posts, resume, and portfolio work'],
+	['Mission', 'Build systems that stay curious under pressure'],
+];
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<SiteLayout description={intro} image={heroImage}>
+	<section class="hero-shell" data-motion-scene="immersive-hero">
+		<div class="hero-grid">
+			<div class="hero-copy" data-motion-block="copy">
+				<p class="eyebrow">PROJECT-DEFIANT</p>
+				<h1>Where no man has code before...</h1>
+				<p class="lede">
+					Project Defiant is the front door to Szymon Szyszkowski’s life science and programming
+					work: a cosmic portfolio for experiments, writing, and practical engineering.
+				</p>
+				<p class="supporting">
+					Expect biology-informed software thinking, a captain’s-log view of hard problems, and a
+					distinctive launchpad before the deeper motion system arrives.
+				</p>
+				<div class="actions">
+					<a class="primary" href="/blog">Enter the blog</a>
+					<a class="secondary" href="/resume">View resume</a>
+				</div>
+			</div>
+
+			<aside class="contact-card" aria-labelledby="contact-title" data-motion-block="contact">
+				<p class="contact-eyebrow">Open a channel</p>
+				<h2 id="contact-title">Bring a life science or software mission aboard.</h2>
+				<p>
+					For quick collaboration starts, send a short mission brief and continue the conversation
+					by email.
+				</p>
+				<a class="contact-link" href={contactHref}>Draft an inquiry</a>
+				<a class="contact-address" href="mailto:szymonszyszkowski@gmail.com">
+					szymonszyszkowski@gmail.com
+				</a>
+			</aside>
+		</div>
+
+		<ul class="signal-strip" aria-label="Mission signals" data-motion-block="signals">
+			{
+				missionSignals.map(([label, text], index) => (
+					<li style={`--signal-index: ${index};`}>
+						<span>{label}</span>
+						{text}
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</SiteLayout>
+
+<style>
+	.hero-shell {
+		position: relative;
+		isolation: isolate;
+		display: grid;
+		gap: 1.5rem;
+		margin-inline: calc(50% - 50vw);
+		padding:
+			clamp(2rem, 4vw, 3rem)
+			max(1rem, calc(50vw - 560px))
+			clamp(2.5rem, 5vw, 4rem);
+		overflow: hidden;
+	}
+
+	.hero-shell::before,
+	.hero-shell::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -2;
+	}
+
+	.hero-shell::before {
+		background:
+			linear-gradient(90deg, rgba(5, 7, 13, 0.88) 0%, rgba(5, 7, 13, 0.52) 48%, rgba(5, 7, 13, 0.8) 100%),
+			linear-gradient(180deg, rgba(130, 108, 255, 0.18), transparent 42%),
+			url('/images/spaceship-hero.jpg') center 22% / cover no-repeat;
+		transform: scale(1.03);
+		animation: hero-drift var(--motion-drift-duration) ease-in-out infinite alternate;
+	}
+
+	.hero-shell::after {
+		z-index: -1;
+		background:
+			radial-gradient(circle at top left, rgba(var(--color-accent), 0.28), transparent 35%),
+			linear-gradient(180deg, rgba(7, 10, 18, 0.12), rgba(7, 10, 18, 0.68));
+		animation: hero-glow calc(var(--motion-drift-duration) * 0.8) ease-in-out infinite alternate;
+	}
+
+	.hero-grid {
+		width: min(1120px, calc(100vw - 2rem));
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.95fr);
+		gap: 1.5rem;
+		align-items: end;
+	}
+
+	.hero-copy,
+	.contact-card,
+	.signal-strip {
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		background: rgba(8, 12, 20, 0.64);
+		backdrop-filter: blur(18px);
+		box-shadow: var(--box-shadow);
+	}
+
+	.hero-copy {
+		display: grid;
+		gap: 1.25rem;
+		padding: clamp(1.5rem, 3vw, 2.75rem);
+		border-radius: 28px;
+		animation: panel-arrive var(--motion-enter-duration) var(--motion-enter-ease) both;
+	}
+
+	.eyebrow,
+	.contact-eyebrow,
+	.signal-strip span {
+		margin: 0;
+		color: rgb(var(--color-accent-strong));
+		font-size: 0.82rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+
+	.lede,
+	.supporting,
+	.contact-card p {
+		max-width: 42rem;
+		margin: 0;
+		color: rgba(237, 241, 247, 0.86);
+	}
+
+	.supporting {
+		color: rgba(167, 178, 197, 0.98);
+		font-size: 1rem;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.85rem;
+	}
+
+	.actions a,
+	.contact-link,
+	.contact-address {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: fit-content;
+		padding: 0.85rem 1.15rem;
+		border-radius: 999px;
+		border: 1px solid rgba(255, 255, 255, 0.14);
+		transition:
+			transform var(--motion-hover-duration) ease,
+			border-color var(--motion-hover-duration) ease,
+			background-color var(--motion-hover-duration) ease,
+			box-shadow var(--motion-hover-duration) ease;
+	}
+
+	.primary,
+	.contact-link {
+		background: rgba(var(--color-accent), 0.2);
+		color: rgb(var(--color-text));
+	}
+
+	.secondary,
+	.contact-address {
+		background: rgba(7, 10, 18, 0.32);
+		color: rgb(var(--color-text));
+	}
+
+	.actions a:hover,
+	.contact-link:hover,
+	.contact-address:hover {
+		transform: translateY(-1px);
+		border-color: rgba(var(--color-accent-strong), 0.75);
+		box-shadow: 0 0 0 0.18rem rgba(var(--color-accent), 0.16);
+	}
+
+	.contact-card {
+		display: grid;
+		gap: 1rem;
+		padding: clamp(1.25rem, 2vw, 1.75rem);
+		border-radius: 24px;
+		animation: panel-arrive var(--motion-enter-duration) var(--motion-enter-ease) 120ms both;
+	}
+
+	.contact-card h2 {
+		margin: 0;
+		font-size: clamp(1.45rem, 2vw, 2rem);
+	}
+
+	.contact-address {
+		padding-block: 0;
+		border: 0;
+		background: none;
+		color: rgb(var(--color-text-muted));
+	}
+
+	.signal-strip {
+		width: min(1120px, calc(100vw - 2rem));
+		margin: 0 auto;
+		padding: 1rem;
+		border-radius: 24px;
+		list-style: none;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.signal-strip li {
+		display: grid;
+		gap: 0.5rem;
+		padding: 0.5rem 0.75rem;
+		border-radius: 18px;
+		background: rgba(255, 255, 255, 0.04);
+		color: rgba(237, 241, 247, 0.9);
+		animation:
+			panel-arrive var(--motion-enter-duration) var(--motion-enter-ease) calc(180ms + (var(--signal-index) * 90ms)) both,
+			signal-pulse calc(var(--motion-drift-duration) * 0.75) ease-in-out calc(var(--signal-index) * 0.6s) infinite alternate;
+	}
+
+	html[data-motion='lite'] .hero-shell::after,
+	html[data-motion='lite'] .signal-strip li {
+		animation-duration: var(--motion-enter-duration);
+		animation-iteration-count: 1;
+	}
+
+	html[data-motion='lite'] .hero-copy,
+	html[data-motion='lite'] .contact-card {
+		backdrop-filter: blur(12px);
+	}
+
+	html[data-motion='reduce'] .hero-shell::before,
+	html[data-motion='reduce'] .hero-shell::after,
+	html[data-motion='reduce'] .hero-copy,
+	html[data-motion='reduce'] .contact-card,
+	html[data-motion='reduce'] .signal-strip li {
+		animation: none;
+		transform: none;
+	}
+
+	html[data-motion='reduce'] .hero-copy,
+	html[data-motion='reduce'] .contact-card,
+	html[data-motion='reduce'] .signal-strip {
+		backdrop-filter: none;
+	}
+
+	@media (max-width: 900px) {
+		.hero-grid,
+		.signal-strip {
+			grid-template-columns: 1fr;
+		}
+
+		.hero-shell {
+			padding-inline: 1rem;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.hero-shell::before {
+			background:
+				linear-gradient(180deg, rgba(5, 7, 13, 0.75), rgba(5, 7, 13, 0.92)),
+				url('/images/spaceship-hero.jpg') 62% 18% / cover no-repeat;
+		}
+
+		.hero-copy,
+		.contact-card,
+		.signal-strip {
+			border-radius: 20px;
+		}
+	}
+
+	@keyframes hero-drift {
+		from {
+			transform: scale(1.03) translate3d(0, 0, 0);
+		}
+
+		to {
+			transform: scale(1.08) translate3d(0, -0.75rem, 0);
+		}
+	}
+
+	@keyframes hero-glow {
+		from {
+			opacity: 0.7;
+		}
+
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes panel-arrive {
+		from {
+			opacity: 0;
+			transform: translate3d(0, 1rem, 0);
+		}
+
+		to {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+		}
+	}
+
+	@keyframes signal-pulse {
+		from {
+			transform: translate3d(0, 0, 0);
+		}
+
+		to {
+			transform: translate3d(0, -0.35rem, 0);
+		}
+	}
+</style>
